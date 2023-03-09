@@ -3,6 +3,7 @@
 
 ![](https://github.com/mrtyildiz/Blog-Post/blob/main/Docker/img/Docker_logo.svg.png)
 
+
 Docker Swarm Temelde container notları oluşturma ve yönetmek amacıyla kullanılmaktadır.
 Docker nodelarının loglarının yönetilmesi kolaylık sağlamaktadır. Docker Swarm özelliği 
 Docker Engine ile birlikte default olarak yüklenmektedir.
