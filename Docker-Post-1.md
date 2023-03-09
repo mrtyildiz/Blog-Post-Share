@@ -1,30 +1,32 @@
-## Django Web Server Üzerinde API Kullanımı
+Merhabalar önceki bloğumda Doc ve Redoc kavramlarından kısa olarak bahsetmiştim. Önceki bloğuma [buradan](https://medium.com/@muratasnb/fastapi-giri%C5%9F-798edbda01ec)
+ulaşabilirsiniz.
+![](https://github.com/mrtyildiz/Blog-Post/blob/main/Python/img/1.png?raw=true)
+Bu kavramların daha iyi anlaşılması adına önceki bloğumda oluşturmuş olduğumuz fastapi:2.0 adlı imajı yeniden çalıştırılması germektedir. Bu nedenle "docker run -it -d -p 80:8000 fastapi:2.0" komutu kullanılarak istemiş olduğumız docker konteynerı çalıştırılır.
+![](https://github.com/mrtyildiz/Blog-Post/blob/main/Python/img/14.png?raw=true)
 
-İlk öncelikle Django projesinin oluşturulması amacıyla “django-admin startproject api” ve “python3 app/manage.py startapp app” komutları kullanılır.
+Konteyner çalıştırıldıktan sonra host makinenin IP adresi kullanılarak 80 portuna browser docs path'e istek gönderilir. 
+![](https://github.com/mrtyildiz/Blog-Post/blob/main/Python/img/15.png?raw=true)
+Burada görselde  görüldüğü gibi bir "Internal Server Error /openapi.json" hatası alınmaktadır. Bu hatanın giderilmesi amacıyla uygulamamızı çalıştırmakta oluduğumuz model.py dosyasını düzenleyeceğiz. Burada kullanmış olduğumuz id adresinin değişkeni pasif hale getirilir.
+![](https://github.com/mrtyildiz/Blog-Post/blob/main/Python/img/16.png?raw=true)
+Dosya kayıt edildikten sonra konteyner yeniden başlatılır. Sonrasında bowser üzerinden yeniden gönderilir. 
+![](https://github.com/mrtyildiz/Blog-Post/blob/main/Python/img/17.png?raw=true)
 
-![](https://github.com/mrtyildiz/Blog-Post/blob/main/Django/img/1.png?raw=true)
+Görselde görülen ekran üzerinden GET ve POST isteklerimizi gerçekleştirebilmekteyiz. İlk öncelikle açılan swagger üzerinden GET methodu açılır ve "Try it out" butonuna tıklanılır. Sonrasında isteğin gerçekleştirilmesi amacıyla "Execute" butonuna tıklanılır. "server response" kısmında API üzerinden gelen cevapları aşağıdaki görselde görüldüğü gibidir.
+![](https://github.com/mrtyildiz/Blog-Post/blob/main/Python/img/18.png?raw=true)
+Görselde görüldüğü gibi kullanılabilecek Curl komutu ve Request URL görülmektedir.
 
-Django üzerinde REST API özelliğinin kullanılabilmesi amacıyla “djangorestframework” adlı kütüphane yüklenir. Bu amaç doğrultusunda “pip3 install djangorestframework” komutu kullanılır.
+Swagger üzerinden POST isteğinin gönderilmesi amacıyla "Try it out" butonuna tıklanılır. Request body kısmı düzenlenilir ve "Execute" butonu kullanılarak istek gönderilir.
+![](https://github.com/mrtyildiz/Blog-Post/blob/main/Python/img/19.png?raw=true)
+Gönderilen request 'e ait response 'nın incelenmesi amacıyla Responses kısmı incelenir.
+![](https://github.com/mrtyildiz/Blog-Post/blob/main/Python/img/20.png?raw=true)
 
-![](https://github.com/mrtyildiz/Blog-Post/blob/main/Django/img/2.png?raw=true)
+Görselde görüldüğü gibi kullanılabilecek örnek curl komutu ve isteğin atılmış olduğu Request URL bulunmaktadır. "Server response" olarak HTTP kodu ve response body kısmı bulunmaktdır.
 
-Oluşturulmuş app klasörünün ve yüklenmiş olan REST Framework kütüphanesinin projeye tanıtılması amacıyla settings.py dosyasında düzenleme yapılır.
+### Fastapi redoc kavramı
 
-![](https://github.com/mrtyildiz/Blog-Post/blob/main/Django/img/3.png?raw=true)
+FastAPI 'de bulunan /redoc path'i oluşturmuş olduğumuz pathler hakkında bilgi vermektedir. Bu bilgiler;
+* Pathlerin methodları
+* Request Body Schema
+* Response HTTP kod bilgileri
 
-İlk öncelikle app klasörünün içerisine urls.py adlı python script oluşturulur. Oluşturulan urls.py dosyasının içerisine aşağıdaki gibi kullanılacak olan views fonksiyonu import edilir. 
-
-![](https://github.com/mrtyildiz/Blog-Post/blob/main/Django/img/4.png?raw=true)
-
-Oluşturulmuş olan urls.py dosyası api klasörünün altında bulunan urls.py ‘ye import edilir. Bu sayede oluşturulan urls.py ‘de yapılan her navigasyon ayarlamaları proje tarafından kullanılabilir. 
-
-![](https://github.com/mrtyildiz/Blog-Post/blob/main/Django/img/5.png?raw=true)
-
-Yukarıdaki görselde görüldüğü gibi /api/ üzerinde gelen her istek /app/urls.py python script yönlendirilmektedir. 
-Kullanılan /app/views.py dosyası içerisinde bulunan “getAPI” fonksiyonu aşağıdaki gibidir. Bu fonksiyondaki temel amaçlı routes değişkeni içerisine yazılan json verisini GET method kullanılarak işlenmesine imkan sunmaktadır.
-
-![](https://github.com/mrtyildiz/Blog-Post/blob/main/Django/img/6.png?raw=true)
-
-Tarayıcı üzerinden Django web server çalıştığı sunucuya GET isteği yapıldığında aşağıdaki görseldeki gibi bir geri dönüş olmaktadır.
-
-![](https://github.com/mrtyildiz/Blog-Post/blob/main/Django/img/7.png?raw=true)
+![](https://github.com/mrtyildiz/Blog-Post/blob/main/Python/img/21.png?raw=true)
